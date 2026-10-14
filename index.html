@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.2, user-scalable=yes, viewport-fit=cover">
+  <title>Spotlight 6 · There is / There are Trainer</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0f0f1a;
+      background-image:
+        radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 85% 80%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.08) 0%, transparent 70%);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 1.5rem 1rem;
+      margin: 0;
+      color: #e2e8f0;
+    }
+
+    .trainer-container {
+      max-width: 820px;
+      width: 100%;
+      background: rgba(22, 22, 38, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 2rem;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        0 25px 60px rgba(0, 0, 0, 0.55),
+        0 0 80px rgba(99, 102, 241, 0.08);
+      padding: 2rem 2rem 1.8rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #a78bfa 0%, #6366f1 40%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    h1 .badge {
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      -webkit-text-fill-color: white;
+      padding: 0.25rem 0.9rem;
+      border-radius: 2rem;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #64748b;
+      font-size: 0.88rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 1.6rem;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 1.2rem;
+      padding: 0.3rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 0.7rem 0.5rem;
+      border-radius: 1rem;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+    }
+    .tab-btn:hover:not(.active) {
+      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .panel { display: none; animation: fadeIn 0.3s ease; }
+    .panel.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .grammar-reminder {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 1.5rem;
+      padding: 1.5rem 1.6rem;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .grammar-reminder h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      margin-bottom: 1rem;
+    }
+    .formula-box {
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 1.2rem;
+      padding: 1.1rem 1.2rem;
+      margin: 0.7rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .formula-box p {
+      color: #cbd5e1;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+    .formula {
+      font-size: 1rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.15));
+      display: inline-block;
+      padding: 0.45rem 1.1rem;
+      border-radius: 2rem;
+      margin: 0.35rem 0;
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      font-family: 'Inter', monospace;
+    }
+    .formula.green {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.15));
+      color: #6ee7b7;
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+    .formula.pink {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(244, 114, 182, 0.15));
+      color: #f9a8d4;
+      border-color: rgba(236, 72, 153, 0.3);
+    }
+    .example { color: #94a3b8; font-style: italic; margin-left: 0.5rem; font-size: 0.88rem; }
+    .example strong { color: #f472b6; font-style: normal; }
+    .note {
+      background: rgba(6, 182, 212, 0.08);
+      border-left: 3px solid #06b6d4;
+      padding: 0.7rem 1rem;
+      border-radius: 0.8rem;
+      margin-top: 0.9rem;
+      font-size: 0.86rem;
+      color: #a5f3fc;
+      line-height: 1.55;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 1.8rem;
+      padding: 1.8rem 1.8rem 1.6rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 1.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4);
+      opacity: 0.7;
+    }
+    .progress {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #818cf8;
+      margin-bottom: 0.8rem;
+    }
+    .progress-bar-wrap {
+      width: 100%; height: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 4px;
+      margin-bottom: 1.2rem;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4);
+      border-radius: 4px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+    .task-hint {
+      font-size: 0.82rem;
+      color: #64748b;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+      font-style: italic;
+    }
+    .sentence-line {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      margin: 0.5rem 0 1.5rem;
+      line-height: 1.9;
+      display: block;
+    }
+    .sentence-line span { white-space: pre-wrap; }
+    .sentence-line .speaker-a {
+      color: #a5b4fc;
+      font-weight: 800;
+      margin-right: 0.3rem;
+    }
+    .sentence-line .speaker-b {
+      color: #f472b6;
+      font-weight: 800;
+      margin-right: 0.3rem;
+    }
+    .blank-input {
+      width: 130px;
+      padding: 0.45rem 0.7rem;
+      border: 2px solid rgba(99, 102, 241, 0.3);
+      border-radius: 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.02rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.05);
+      color: #f1f5f9;
+      text-align: center;
+      margin: 0 0.15rem;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+    .blank-input::placeholder { color: rgba(148, 163, 184, 0.4); font-weight: 500; }
+    .blank-input:focus {
+      border-color: #6366f1;
+      background: rgba(99, 102, 241, 0.1);
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    }
+    .action-buttons {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .btn {
+      font-family: 'Inter', sans-serif;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.65rem 1.4rem;
+      border-radius: 1rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: #cbd5e1;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none;
+      color: white;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #7c3aed, #a78bfa);
+    }
+    .btn-share {
+      background: linear-gradient(135deg, #06b6d4, #0891b2);
+      border: none;
+      color: white;
+      box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+    }
+    .btn-share:hover {
+      background: linear-gradient(135deg, #22d3ee, #06b6d4);
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.2rem;
+      gap: 0.6rem;
+    }
+    .nav-arrow {
+      font-family: 'Inter', sans-serif;
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 0.8rem 1.6rem;
+      border-radius: 1rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      cursor: pointer;
+      color: #a5b4fc;
+      transition: all 0.2s ease;
+    }
+    .nav-arrow:hover {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: #818cf8;
+      color: #c7d2fe;
+    }
+    .nav-arrow:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .feedback {
+      margin-top: 0.9rem;
+      font-weight: 600;
+      min-height: 1.8rem;
+      font-size: 0.92rem;
+      color: #94a3b8;
+    }
+    .feedback strong { color: #f472b6; }
+    .correct-input {
+      border-color: #10b981 !important;
+      background: rgba(16, 185, 129, 0.12) !important;
+      color: #6ee7b7 !important;
+    }
+    .incorrect-input {
+      border-color: #ef4444 !important;
+      background: rgba(239, 68, 68, 0.1) !important;
+      color: #fca5a5 !important;
+    }
+
+    .results-section {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 1.5rem;
+      padding: 1.4rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      margin-top: 1.2rem;
+      display: none;
+    }
+    .results-section.visible {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+    .results-section h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      margin-bottom: 0.8rem;
+    }
+    .result-stats {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .stat-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      padding: 0.7rem 1.1rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      min-width: 110px;
+    }
+    .stat-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.2rem;
+    }
+    .stat-value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #a78bfa, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @media (max-width: 550px) {
+      .trainer-container { padding: 1.3rem 1rem; border-radius: 1.5rem; }
+      h1 { font-size: 1.35rem; }
+      .sentence-line { font-size: 1.05rem; }
+      .blank-input { width: 100px; font-size: 0.9rem; }
+      .btn { padding: 0.55rem 1rem; font-size: 0.82rem; }
+      .nav-arrow { padding: 0.65rem 1rem; font-size: 0.95rem; }
+      .stat-item { flex: 1; min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="trainer-container">
+  <h1>
+    🏠 There is / There are
+    <span class="badge">Spotlight 6</span>
+  </h1>
+  <p class="subtitle">Rooms & Furniture · a / an / some / any</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" id="tabReminderBtn">📘 Reminder</button>
+    <button class="tab-btn" id="tabTrainerBtn">🎯 Trainer</button>
+  </div>
+
+  <!-- REMINDER -->
+  <div class="panel active" id="reminderPanel">
+    <div class="grammar-reminder">
+      <h2>✨ There is / There are</h2>
+
+      <div class="formula-box">
+        <p style="font-weight:700; color:#6ee7b7; font-size:0.95rem;">🟢 AFFIRMATIVE (утвердительная)</p>
+        <div class="formula green">There is + a / an + singular noun</div>
+        <div class="formula green">There are + some + plural noun</div>
+        <p class="example">There <strong>is a</strong> sofa in the living room.</p>
+        <p class="example">There <strong>are some</strong> cushions in the living room.</p>
+      </div>
+
+      <div class="formula-box">
+        <p style="font-weight:700; color:#f9a8d4; font-size:0.95rem;">🔴 NEGATIVE (отрицательная)</p>
+        <div class="formula pink">There isn't + a / an + singular noun</div>
+        <div class="formula pink">There aren't + any + plural noun</div>
+        <p class="example">There <strong>isn't a</strong> chair in the living room.</p>
+        <p class="example">There <strong>aren't any</strong> chairs in the living room.</p>
+      </div>
+
+      <div class="formula-box">
+        <p style="font-weight:700; color:#a5b4fc; font-size:0.95rem;">🔵 QUESTIONS (вопросительная)</p>
+        <div class="formula">Is there + a / an ...? — Yes, there is. / No, there isn't.</div>
+        <div class="formula">Are there + any ...? — Yes, there are. / No, there aren't.</div>
+        <p class="example"><strong>Is there a</strong> book in the living room?</p>
+        <p class="example"><strong>Are there any</strong> books in the living room?</p>
+      </div>
+
+      <div class="formula-box">
+        <p style="font-weight:700; color:#fbbf24; font-size:0.95rem;">🔑 a / an / some / any</p>
+        <p><strong>a</strong> — перед согласной: <em>a sofa, a table, a lamp</em></p>
+        <p><strong>an</strong> — перед гласной: <em>an armchair, an orange, an old picture</em></p>
+        <p><strong>some</strong> — в утвердительных (мн. ч.): <em>some cushions, some paintings</em></p>
+        <p><strong>any</strong> — в отрицательных и вопросах: <em>any chairs, any books</em></p>
+      </div>
+
+      <div class="note">
+        ⚡ <strong>Tip:</strong> <em>There is</em> = единственное число. <em>There are</em> = множественное. Всегда смотри на существительное после конструкции!
+      </div>
+    </div>
+  </div>
+
+  <!-- TRAINER -->
+  <div class="panel" id="trainerPanel">
+    <div class="card">
+      <div class="progress" id="progressText">Question 1 of 60</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBarFill"></div></div>
+      <div class="task-hint">💡 Fill in: is / are / isn't / aren't / a / an / some / any</div>
+      <div class="sentence-line" id="sentenceDisplay"></div>
+      <div class="action-buttons">
+        <button class="btn btn-primary" id="checkBtn">✅ Check</button>
+        <button class="btn" id="showHintBtn">💡 Hint</button>
+        <button class="btn" id="clearBtn">🔄 Clear</button>
+      </div>
+      <div class="feedback" id="feedbackMsg"></div>
+    </div>
+    <div class="nav-buttons">
+      <button class="nav-arrow" id="prevBtn">◀ Prev</button>
+      <button class="nav-arrow" id="nextBtn">Next ▶</button>
+    </div>
+    <p style="text-align:center; margin-top:0.7rem; color:#475569; font-size:0.82rem;">⌨️ Use ← / → arrow keys</p>
+
+    <div style="text-align:center; margin-top:1.2rem;">
+      <button class="btn btn-share" id="shareBtn" style="padding:0.75rem 1.8rem; font-size:0.95rem;">
+        📤 Share with Teacher
+      </button>
+    </div>
+
+    <div class="results-section" id="resultsSection">
+      <h3>📊 Your Results</h3>
+      <div class="result-stats">
+        <div class="stat-item"><div class="stat-label">Correct</div><div class="stat-value" id="statCorrect">0</div></div>
+        <div class="stat-item"><div class="stat-label">Total</div><div class="stat-value" id="statTotal">0</div></div>
+        <div class="stat-item"><div class="stat-label">Score</div><div class="stat-value" id="statScore">0%</div></div>
+        <div class="stat-item"><div class="stat-label">Time</div><div class="stat-value" id="statTime">0:00</div></div>
+      </div>
+      <p style="color:#64748b; font-size:0.82rem; margin-top:0.5rem;">Copy the text below and send it to your teacher:</p>
+      <textarea id="shareText" readonly style="width:100%; margin-top:0.5rem; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:0.8rem; padding:0.8rem; color:#cbd5e1; font-family:'Inter',monospace; font-size:0.82rem; resize:vertical; min-height:90px; outline:none;"></textarea>
+      <button class="btn" id="copyBtn" style="margin-top:0.6rem;">📋 Copy to Clipboard</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // 60 sentences: There is / are / isn't / aren't + a / an / some / any
+    const sentencesData = [
+
+      // ---------- AFFIRMATIVE: a / an (5) ----------
+      { raw: "There is ___ apple on the table.", answers: [["an"]] },
+      { raw: "There is ___ chair in the bedroom.", answers: [["a"]] },
+      { raw: "There is ___ umbrella in the hall.", answers: [["an"]] },
+      { raw: "There is ___ desk in the study.", answers: [["a"]] },
+      { raw: "There is ___ egg in the fridge.", answers: [["an"]] },
+
+      // ---------- AFFIRMATIVE: some (5) ----------
+      { raw: "There are ___ apples on the table.", answers: [["some"]] },
+      { raw: "There are ___ cushions on the sofa.", answers: [["some"]] },
+      { raw: "There are ___ books on the shelf.", answers: [["some"]] },
+      { raw: "There are ___ paintings on the wall.", answers: [["some"]] },
+      { raw: "There are ___ flowers in the vase.", answers: [["some"]] },
+
+      // ---------- AFFIRMATIVE: there is / there are (10) ----------
+      { raw: "___ a sofa in the living room.", answers: [["there is", "there's"]] },
+      { raw: "___ some cushions on the sofa.", answers: [["there are"]] },
+      { raw: "___ a lamp in the bedroom.", answers: [["there is", "there's"]] },
+      { raw: "___ some paintings on the wall.", answers: [["there are"]] },
+      { raw: "___ a cat in the house.", answers: [["there is", "there's"]] },
+      { raw: "___ a bookcase in the study.", answers: [["there is", "there's"]] },
+      { raw: "___ some books on the shelf.", answers: [["there are"]] },
+      { raw: "___ a carpet in the dining room.", answers: [["there is", "there's"]] },
+      { raw: "___ some flowers in the living room.", answers: [["there are"]] },
+      { raw: "___ a clock in the kitchen.", answers: [["there is", "there's"]] },
+
+      // ---------- AFFIRMATIVE: a / an / some (13) ----------
+      { raw: "There is ___ armchair in the corner.", answers: [["an"]] },
+      { raw: "There is ___ mirror in the bathroom.", answers: [["a"]] },
+      { raw: "There are ___ cushions on the sofa.", answers: [["some"]] },
+      { raw: "There is ___ old picture on the wall.", answers: [["an"]] },
+      { raw: "There are ___ shelves in the study.", answers: [["some"]] },
+      { raw: "There is ___ fridge in the kitchen.", answers: [["a"]] },
+      { raw: "There are ___ oranges on the table.", answers: [["some"]] },
+      { raw: "There is ___ orange in the fridge.", answers: [["an"]] },
+      { raw: "There is ___ table in the dining room.", answers: [["a"]] },
+      { raw: "There are ___ plants in the living room.", answers: [["some"]] },
+      { raw: "There is ___ elephant on the poster.", answers: [["an"]] },
+      { raw: "There are ___ chairs in the kitchen.", answers: [["some"]] },
+      { raw: "There is ___ bath in the bathroom.", answers: [["a"]] },
+
+      // ---------- NEGATIVE: there isn't / there aren't (6) ----------
+      { raw: "___ a chair in the living room.", answers: [["there isn't", "there is not"]] },
+      { raw: "___ any books on the table.", answers: [["there aren't", "there are not"]] },
+      { raw: "___ a TV in the bedroom.", answers: [["there isn't", "there is not"]] },
+      { raw: "___ any paintings in the kitchen.", answers: [["there aren't", "there are not"]] },
+      { raw: "___ a fridge in the bathroom.", answers: [["there isn't", "there is not"]] },
+      { raw: "___ any plants in the dining room.", answers: [["there aren't", "there are not"]] },
+
+      // ---------- NEGATIVE: a / an / any (7) ----------
+      { raw: "There isn't ___ clock in the dining room.", answers: [["a"]] },
+      { raw: "There aren't ___ chairs in the kitchen.", answers: [["any"]] },
+      { raw: "There isn't ___ orange on the table.", answers: [["an"]] },
+      { raw: "There aren't ___ plants in the living room.", answers: [["any"]] },
+      { raw: "There isn't ___ mirror in the hall.", answers: [["a"]] },
+      { raw: "There aren't ___ books on the shelf.", answers: [["any"]] },
+      { raw: "There isn't ___ armchair in the bedroom.", answers: [["an"]] },
+
+      // ---------- QUESTIONS as micro-dialogues (7) ----------
+      { raw: "A: Is there a book in the living room?\nB: Yes, ___.", answers: [["there is"]] },
+      { raw: "A: Are there any books in the living room?\nB: Yes, ___.", answers: [["there are"]] },
+      { raw: "A: Is there a sofa in the bedroom?\nB: No, ___.", answers: [["there isn't", "there is not"]] },
+      { raw: "A: Are there any chairs in the kitchen?\nB: No, ___.", answers: [["there aren't", "there are not"]] },
+      { raw: "A: Is there a lamp on the table?\nB: Yes, ___.", answers: [["there is"]] },
+      { raw: "A: Are there any paintings on the wall?\nB: Yes, ___.", answers: [["there are"]] },
+      { raw: "A: Is there a fridge in the kitchen?\nB: No, ___.", answers: [["there isn't", "there is not"]] }
+    ];
+
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    }
+    shuffleArray(sentencesData);
+
+    const parsedSentences = sentencesData.map(item => {
+      const raw = item.raw;
+      const answers = item.answers;
+      const parts = [];
+      const blanks = [];
+      let remaining = raw;
+      let idx = 0;
+
+      while (remaining.includes('___')) {
+        const pos = remaining.indexOf('___');
+        parts.push(remaining.substring(0, pos));
+        blanks.push({ verb: '...', answers: answers[idx] });
+        parts.push('___');
+        remaining = remaining.substring(pos + 3);
+        idx++;
+      }
+      parts.push(remaining);
+      return { parts, blanks };
+    });
+
+    const total = parsedSentences.length;
+    let currentIndex = 0;
+    let startTime = null;
+    let correctCount = 0;
+    let answeredSet = new Set();
+
+    const tabReminderBtn = document.getElementById('tabReminderBtn');
+    const tabTrainerBtn = document.getElementById('tabTrainerBtn');
+    const reminderPanel = document.getElementById('reminderPanel');
+    const trainerPanel = document.getElementById('trainerPanel');
+    const progressText = document.getElementById('progressText');
+    const progressBarFill = document.getElementById('progressBarFill');
+    const sentenceDisplay = document.getElementById('sentenceDisplay');
+    const checkBtn = document.getElementById('checkBtn');
+    const showHintBtn = document.getElementById('showHintBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const feedbackMsg = document.getElementById('feedbackMsg');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const shareBtn = document.getElementById('shareBtn');
+    const resultsSection = document.getElementById('resultsSection');
+    const statCorrect = document.getElementById('statCorrect');
+    const statTotal = document.getElementById('statTotal');
+    const statScore = document.getElementById('statScore');
+    const statTime = document.getElementById('statTime');
+    const shareText = document.getElementById('shareText');
+    const copyBtn = document.getElementById('copyBtn');
+
+    function startTimer() { if (startTime === null) startTime = Date.now(); }
+    function formatTime(ms) {
+      const t = Math.floor(ms / 1000);
+      return `${Math.floor(t / 60)}:${(t % 60).toString().padStart(2, '0')}`;
+    }
+    function updateNavButtons() {
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === total - 1;
+    }
+    function renderCard() {
+      const item = parsedSentences[currentIndex];
+      sentenceDisplay.innerHTML = '';
+      item.parts.forEach((part, i) => {
+        if (part === '___') {
+          const blankIdx = item.parts.slice(0, i).filter(p => p === '___').length;
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.className = 'blank-input';
+          input.placeholder = '...';
+          input.setAttribute('data-blank-index', blankIdx);
+          sentenceDisplay.appendChild(input);
+        } else {
+          const lines = part.split('\n');
+          lines.forEach((line, idx) => {
+            const span = document.createElement('span');
+            if (line.startsWith('A:')) {
+              span.innerHTML = '<span class="speaker-a">A:</span>' + line.substring(2);
+            } else if (line.startsWith('B:')) {
+              span.innerHTML = '<span class="speaker-b">B:</span>' + line.substring(2);
+            } else {
+              span.textContent = line;
+            }
+            sentenceDisplay.appendChild(span);
+            if (idx < lines.length - 1) {
+              sentenceDisplay.appendChild(document.createElement('br'));
+            }
+          });
+        }
+      });
+      progressText.textContent = `Question ${currentIndex + 1} of ${total}`;
+      progressBarFill.style.width = `${((currentIndex + 1) / total) * 100}%`;
+      feedbackMsg.innerHTML = '';
+      updateNavButtons();
+    }
+    function getInputValues() {
+      return Array.from(document.querySelectorAll('#sentenceDisplay .blank-input')).map(i => i.value.trim());
+    }
+    function normalize(str) {
+      return str.replace(/’/g, "'").replace(/\s+/g, ' ').toLowerCase().trim();
+    }
+    function checkAnswers() {
+      startTimer();
+      const item = parsedSentences[currentIndex];
+      const inputs = document.querySelectorAll('#sentenceDisplay .blank-input');
+      const values = getInputValues();
+      let allCorrect = true;
+      inputs.forEach((inp, idx) => {
+        const userVal = normalize(values[idx]);
+        const accepted = item.blanks[idx].answers.map(a => normalize(a));
+        if (userVal === '' || !accepted.includes(userVal)) {
+          inp.classList.add('incorrect-input');
+          inp.classList.remove('correct-input');
+          allCorrect = false;
+        } else {
+          inp.classList.add('correct-input');
+          inp.classList.remove('incorrect-input');
+        }
+      });
+      if (allCorrect && values.every(v => v !== '')) {
+        feedbackMsg.innerHTML = '🎉 Perfect! All correct!';
+        if (!answeredSet.has(currentIndex)) {
+          answeredSet.add(currentIndex);
+          correctCount = answeredSet.size;
+        }
+      } else {
+        const possible = item.blanks.map(b => b.answers.join(' / ')).join('  |  ');
+        feedbackMsg.innerHTML = `❌ Some answers need checking. Possible: <strong>${possible}</strong>`;
+      }
+    }
+    function showHint() {
+      const item = parsedSentences[currentIndex];
+      const hints = item.blanks.map(b => b.answers[0]).join('  /  ');
+      feedbackMsg.innerHTML = `💬 Hint: <strong>${hints}</strong>`;
+    }
+    function clearInputs() {
+      document.querySelectorAll('#sentenceDisplay .blank-input').forEach(inp => {
+        inp.value = '';
+        inp.classList.remove('correct-input', 'incorrect-input');
+      });
+      feedbackMsg.innerHTML = '';
+    }
+    function goToPrev() { if (currentIndex > 0) { currentIndex--; renderCard(); } }
+    function goToNext() { if (currentIndex < total - 1) { currentIndex++; renderCard(); } }
+
+    function showReminder() {
+      reminderPanel.classList.add('active');
+      trainerPanel.classList.remove('active');
+      tabReminderBtn.classList.add('active');
+      tabTrainerBtn.classList.remove('active');
+    }
+    function showTrainer() {
+      reminderPanel.classList.remove('active');
+      trainerPanel.classList.add('active');
+      tabReminderBtn.classList.remove('active');
+      tabTrainerBtn.classList.add('active');
+      renderCard();
+    }
+    function shareWithTeacher() {
+      startTimer();
+      const elapsed = Date.now() - startTime;
+      const timeStr = formatTime(elapsed);
+      const score = Math.round((correctCount / total) * 100);
+      statCorrect.textContent = correctCount;
+      statTotal.textContent = total;
+      statScore.textContent = score + '%';
+      statTime.textContent = timeStr;
+      const text = 
+`📚 Spotlight 6 · There is / There are Trainer
+━━━━━━━━━━━━━━━━━━━━━━
+✅ Correct: ${correctCount} / ${total}
+📊 Score: ${score}%
+⏱️ Time: ${timeStr}
+━━━━━━━━━━━━━━━━━━━━━━
+Completed by: _______________
+Date: ${new Date().toLocaleDateString('en-GB')}`;
+      shareText.value = text;
+      resultsSection.classList.add('visible');
+      resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function copyToClipboard() {
+      shareText.select();
+      shareText.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(shareText.value).then(() => {
+        copyBtn.textContent = '✅ Copied!';
+        setTimeout(() => { copyBtn.textContent = '📋 Copy to Clipboard'; }, 2000);
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (trainerPanel.classList.contains('active')) {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); goToPrev(); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); goToNext(); }
+        else if (e.key === 'Enter' && document.activeElement?.tagName === 'INPUT') {
+          e.preventDefault(); checkAnswers();
+        }
+      }
+    });
+
+    tabReminderBtn.addEventListener('click', showReminder);
+    tabTrainerBtn.addEventListener('click', showTrainer);
+    checkBtn.addEventListener('click', checkAnswers);
+    showHintBtn.addEventListener('click', showHint);
+    clearBtn.addEventListener('click', clearInputs);
+    prevBtn.addEventListener('click', goToPrev);
+    nextBtn.addEventListener('click', goToNext);
+    shareBtn.addEventListener('click', shareWithTeacher);
+    copyBtn.addEventListener('click', copyToClipboard);
+
+    renderCard();
+  })();
+</script>
+</body>
+</html>
